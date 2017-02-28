@@ -1,7 +1,7 @@
-from Pole import Pole
-from SphToCart import SphToCart
-from CartToSph import CartToSph
-from ZeroTwoPi import ZeroTwoPi, calculate_trend_less_than_zero, calculate_trend_greater_than_twopi
+from ..Pole import Pole
+from ..SphToCart import SphToCart
+from ..CartToSph import CartToSph
+from ..ZeroTwoPi import ZeroTwoPi, calculate_trend_less_than_zero, calculate_trend_greater_than_twopi
 import math
 import numpy
 
