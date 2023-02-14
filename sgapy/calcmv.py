@@ -3,10 +3,10 @@ import numpy as np
 from sphtocart import sphtocart
 from carttosph import carttosph
 
-def calcmv(T,P,*args,**kwargs):
+def calcmv(T,P):
     
 
-    #CalcMV calculates the mean vector for a given series of lines
+    #   calcmv calculates the mean vector for a given series of lines
     
     #   [trd,plg,Rave,conc,d99,d95] = calcmv(T,P) calculates the trend (trd) 
     #   and plunge (plg) of the mean vector, its normalized length (Rave), and
@@ -17,7 +17,7 @@ def calcmv(T,P,*args,**kwargs):
     #   NOTE: Input/Output trends and plunges, as well as uncertainty
     #   cones are in radians
     
-    #   calcmv uses functions SphToCart and CartToSph
+    #   calcmv uses functions sphtocart and carttosph
     
     #MATLAB script written by Nestor Cardozo for the book Structural 
     #Geology Algorithms by Allmendinger, Cardozo, & Fisher, 2011. If you use
@@ -45,7 +45,7 @@ def calcmv(T,P,*args,**kwargs):
    #the resultant vector normalized by the number of lines
    R = np.sqrt(CNsum*CNsum + CEsum*CEsum + CDsum*CDsum)
    Rave = R/nlines
-   print(Rave)
+   
    #If Rave is lower than 0.1, the mean vector is insignificant, return error
    if Rave < 0.1:
        error('Mean vector is insignificant')
@@ -64,8 +64,7 @@ def calcmv(T,P,*args,**kwargs):
            
        #Convert the mean vector from direction cosines to trend and plunge
        [trd,plg]=carttosph(CNsum,CEsum,CDsum)
-       print(np.degrees(trd))
-       print(np.degrees(plg))
+
        #If there are enough measurements calculate the Fisher Statistics
        #For more information on these statistics see Fisher et al. (1987)
        if R < nlines:
@@ -81,5 +80,6 @@ def calcmv(T,P,*args,**kwargs):
            d99 = np.arccos(1.0-((nlines-R)/R)*np.power(afact, bfact-1.0))
            afact = 1.0/0.05
            d95 = np.arccos(1.0-((nlines-R)/R)*np.power(afact,bfact-1.0))
-
     
+
+   return trd,plg,Rave,conc,d99,d95
