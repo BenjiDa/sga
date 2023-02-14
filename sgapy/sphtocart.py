@@ -3,7 +3,7 @@
 import math
 import numpy 
     
-def SphToCart(trd=None,plg=None,k=None,*args,**kwargs):
+def sphtocart(trd=None,plg=None,k=None,*args,**kwargs):
     # varargin = SphToCart.varargin
     # nargin = SphToCart.nargin
 

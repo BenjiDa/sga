@@ -4,7 +4,7 @@ import math
 import numpy
 from ZeroTwoPi import ZeroTwoPi
 
-def CartToSph(cn=None,ce=None,cd=None,*args,**kwargs):
+def carttosph(cn=None,ce=None,cd=None,*args,**kwargs):
     # varargin = CartToSph.varargin
     # nargin = CartToSph.nargin
 
