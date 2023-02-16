@@ -6,11 +6,17 @@ Created on Tue Feb 14 14:43:52 2023
 """
 
 import unittest
-#import numpy as np
+import numpy as np
 
 from calcmv import calcmv
 from sphtocart import sphtocart
 from carttosph import carttosph
+from zerotwopi import zerotwopi
+from stcoordline import stcoordline
+from pole import pole
+from dircosaxes import dircosaxes
+from cauchy import cauchy
+from principalstress import principalstress
 
 
 class SgaTestCase(unittest.TestCase):
@@ -28,9 +34,48 @@ class SgaTestCase(unittest.TestCase):
         self.assertEqual(carttosph(1,1,1), [0.7853981633974483, 1.5707963267948966])
         
     def test_zerotwopi(self):
-        pass#self.assertEqual(..., second)
+        self.assertEqual(zerotwopi(1.4), (1.4))
+        self.assertEqual(zerotwopi(-7), -0.7168146928204138)
+        self.assertEqual(zerotwopi(-2), 4.283185307179586)
+        self.assertEqual(zerotwopi(7), 0.7168146928204138)
         
+    def test_stcoordline(self):
+        self.assertEqual(stcoordline(1,1,0), ([0.24689431284211627, 0.15852901519210347]))
+        self.assertEqual(stcoordline(1,1,1), ([0.3350375824927938, 0.21512515777911212]))
+        
+    def test_pole(self):
+        self.assertEqual(pole(2,2, 0), [3.5707963267948966, -0.42920367320510344])
+        self.assertEqual(pole(2,2,1), [0.4292036732051034, -0.4292036732051034])
+        
+    def test_dircosaxes(self):
+        outlist = [[-1.00000000e+00, -0.00000000e+00,  1.22464680e-16], [-9.18338009e-49,  1.00000000e+00, -7.49879891e-33], [-6.12323400e-17, -7.49879891e-33, -1.00000000e+00]]
+        a = np.array(outlist)
+        self.assertEqual(dircosaxes(0,np.pi,np.pi*-1).all(), a.all())
+    
+    def test_cauchy(self):
+        stress = np.array(([[1,1,1],[1,2,3],[4,3,2]])).reshape(3,3)
+        tx1 = 1
+        px1 = 2
+        tx3 =1
+        strike = 3
+        dip = 1
+        T = np.array(([1,2,1]))
+        pT = np.array(([1,1,1]))
+        self.assertEqual(cauchy(stress, tx1, px1, tx3, strike, dip)[0].all(), T.all())
+        self.assertEqual(cauchy(stress, tx1, px1, tx3, strike, dip)[1].all(), pT.all())
+        
+    def test_principalstress(self):
+        stress = np.array(([[1,1,1],[1,2,1],[1,2,3]]))
+        tx1 = 1
+        px1 = 2
+        tx3 = 1
+        pstress = np.array(([[1, 1.83286821, 0.29868141],[2,2,2],[2,2,2]]))
+        dCp = np.array(([[1,1,1],[1,1,1],[1,1,1]]))
+        print(principalstress(stress, tx1, px1, tx3)[0][0], pstress[0])
+        self.assertEqual(principalstress(stress, tx1, px1, tx3)[0][0], pstress[0])
+        self.assertEqual(principalstress(stress, tx1, px1, tx3)[1], dCp
 
+    
 
 if __name__ == '__main__':
     unittest.main()

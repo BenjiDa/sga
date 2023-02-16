@@ -5,7 +5,7 @@ def zerotwopi(a):
     '''
      zerotwopi constrains azimuth to lie between 0 and 2*pi radians
     
-       b = ZeroTwoPi(a) returns azimuth b (from 0 to 2*pi)
+       b = zerotwopi(a) returns azimuth b (from 0 to 2*pi)
        for input azimuth a (which may not be between 0 to 2*pi)
     
        NOTE: Azimuths a and b are input/output in radians 
